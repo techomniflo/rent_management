@@ -17,6 +17,13 @@ class StorePaymentCalculator(Document):
 			'posting_date':invoices['posting_date'],
 			'amount':invoices['rounded_total'],
 			'total_amount':total})
-
-
-
+		customer_name=frappe.db.get_value('Customer',self.customer,'customer_name')
+		values={'customer_name':customer_name}
+		journal_entry=frappe.db.sql("""select je.name,je.posting_date,je.total_credit from `tabJournal Entry` as je where je.title=%(customer_name)s """,values=values,as_dict=True)
+		for entry in journal_entry:
+			total=total-entry['total_credit']
+			self.append('items',{
+				'receipt':entry['name'],
+				'posting_date':entry['posting_date'],
+				'amount':-1*(float(entry['total_credit'])),
+				'total_amount':total})
