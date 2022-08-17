@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2022-08-17 12:23:23.573458",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "receipt",
+  "posting_date",
+  "amount",
+  "total_amount",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "receipt",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Receipt "
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Store Payment Calculator Items",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Posting Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-17 13:11:23.699037",
+ "modified_by": "Administrator",
+ "module": "Rent Management",
+ "name": "Store Payment Calculator Items",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
