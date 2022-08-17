@@ -14,7 +14,7 @@ frappe.ui.form.on('Store Payment Calculator', {
 			freeze:'true',
 			freeze_message:'Calculating'
 		}).then((res) => {
-			refresh_fields('items');
-		})
+			refresh_field('items');
+		})		
 	}
 });

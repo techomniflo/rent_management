@@ -8,15 +8,14 @@ class StorePaymentCalculator(Document):
 	@frappe.whitelist()
 	def fetch_items(self):
 		total=0
-		sales_invoices=frappe.db.get_all('Sales Invoice',filters={'customer':self.customer},fields=['customer','name','posting_date','outstanding_amount'])
+		sales_invoices=frappe.db.get_all('Sales Invoice',filters={'customer':self.customer,'status':['!=','Cancelled'],'status':['!=','Draft']},fields=['customer','name','posting_date','outstanding_amount'])
 		for invoices in sales_invoices:
 			total=total+invoices['outstanding_amount']
 			self.append('items',
 			{'receipt':invoices['name'],
 			'posting_date':invoices['posting_date'],
 			'amount':invoices['outstanding_amount'],
-			'total':total,
-			})
+			'total_amount':total})
 
 
 
