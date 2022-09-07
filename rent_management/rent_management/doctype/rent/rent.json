@@ -9,12 +9,12 @@
   "customer",
   "customer_name",
   "column_break_3",
+  "company",
   "posting_date",
   "section_break_5",
-  "month",
-  "year",
+  "from_date",
+  "to_date",
   "rent",
-  "grand_total",
   "outstanding_amount",
   "amended_from"
  ],
@@ -54,38 +54,38 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "month",
-   "fieldtype": "Select",
-   "label": "Month",
-   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember"
-  },
-  {
-   "fieldname": "year",
-   "fieldtype": "Select",
-   "label": "Year",
-   "options": "\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029\n2030\n2031\n2032\n2033\n2034\n2035\n2036\n2037\n2038\n2039\n2040\n2041\n2042\n2043\n2044\n2045\n2046\n2047\n2048\n2049\n2050"
-  },
-  {
    "fieldname": "rent",
    "fieldtype": "Currency",
-   "label": "Rent"
-  },
-  {
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "label": "Grand Total",
-   "options": "doc.rent"
+   "label": "Rent Amount",
+   "non_negative": 1
   },
   {
    "fieldname": "outstanding_amount",
-   "fieldtype": "Data",
-   "label": "Outstanding Amount"
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-05 16:38:28.206030",
+ "modified": "2022-09-07 17:54:57.151584",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Rent",
