@@ -7,7 +7,9 @@ frappe.ui.form.on('Store Payment', {
 	// }
 	get_outstanding(frm){
 		cur_frm.clear_table("invoices_reference");
+		cur_frm.clear_table("rent_reference");
 		cur_frm.refresh_field('invoices_reference');
+		cur_frm.refresh_field('rent_reference');
 		frappe.call({
 			doc : frm.doc,
 			method : 'fetch_items',
@@ -15,6 +17,7 @@ frappe.ui.form.on('Store Payment', {
 			freeze_message : 'Getting All Items'
 		}).then((res) => {
 				refresh_field('invoices_reference');
+				refresh_field('rent_reference');
 
 				
 		})
