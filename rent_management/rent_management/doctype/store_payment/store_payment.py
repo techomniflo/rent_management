@@ -17,7 +17,7 @@ class StorePayment(Document):
 				'outstanding':invoices.outstanding_amount,
 				'due_date':invoices.due_date
 			})
-		rent_invoices=frappe.db.sql("""select r.name,r.from_date,r.rent_amount,r.outstanding_amount, from `tabRent` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount>0 order by r.posting_date""",values=values,as_dict=True)
+		rent_invoices=frappe.db.sql("""select r.name,r.rent_amount,r.outstanding_amount,r.from_date,r.to_date from `tabRent` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount>0 order by r.posting_date""",values=values,as_dict=True)
 		for rent in rent_invoices:
 			self.append('rent_reference',{
 			'type':'Rent',
