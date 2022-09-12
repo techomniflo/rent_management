@@ -25,5 +25,5 @@ class StorePayment(Document):
 			'from_date':rent.from_date,
 			'to_date':rent.to_date,
 			'rent_amount':rent.rent,
-			'outstanding':rent.outstanding_amount
+			'outstanding_amount':rent.outstanding_amount
 			})
