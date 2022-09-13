@@ -18,6 +18,7 @@
   "to_date",
   "amount",
   "outstanding_amount",
+  "discount_type",
   "credit_to",
   "debit_to",
   "amended_from"
@@ -27,7 +28,8 @@
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "fetch_from": "customer.customer_name",
@@ -53,7 +55,8 @@
   {
    "fieldname": "posting_date",
    "fieldtype": "Datetime",
-   "label": "Posting Date"
+   "label": "Posting Date",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_5",
@@ -80,13 +83,14 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "OPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
+   "options": "\nOPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
   },
   {
    "default": "Debtors - OS",
@@ -112,13 +116,20 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Amount",
-   "non_negative": 1
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "label": "Discount Type",
+   "options": "Display Discount\nCredit Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-13 19:18:29.130428",
+ "modified": "2022-09-13 19:29:28.874003",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Rent",

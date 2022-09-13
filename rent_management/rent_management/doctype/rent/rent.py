@@ -42,6 +42,7 @@ class Rent(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"credit_in_account_currency": self.amount,
+							"voucher_type":self.discount_type,
 							# "against_voucher_type": 'Rent',
 							# "against_voucher": self.name,
 							"remarks": "Rent collected",
