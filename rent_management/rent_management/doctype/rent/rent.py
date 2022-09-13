@@ -33,7 +33,7 @@ class Rent(AccountsController):
 		frappe.msgprint(str(gl_map))
 		gl_map.append(
 			self.get_gl_dict(
-						{	"voucher_type":self.discount_type,
+						{
 							"account": 'Debtors - OS',
 							"party_type": "Customer",
 							"party": self.customer,
