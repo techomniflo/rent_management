@@ -5,6 +5,33 @@ import frappe
 from frappe.model.document import Document
 
 class StorePayment(Document):
+	def on_submit():
+		pass
+	
+	@frappe.whitelist()
+	def allocate_outstanding(self):
+		if self.invoices_reference:
+			allocate=self.allocate
+			for i in self.invoices_reference:
+				if allocate>=i.outstanding:
+					i.allocated=i.outstanding
+					allocate=allocate-i.outstanding
+				else:
+					i.allocated=allocate
+					allocate=allocate-allocate
+	
+	@frappe.whitelist()
+	def allocate_credit(self):
+		if self.rent_reference:
+			allocate=self.allocate_to_credit
+			for i in self.rent_reference:
+				if allocate>=i.outstanding:
+					i.allocated=i.outstanding
+					allocate=allocate-i.outstanding
+				else:
+					i.allocated=allocate
+					allocate=allocate-allocate
+
 	@frappe.whitelist()
 	def fetch_items(self):
 		values={'company':self.company,'customer':self.customer}

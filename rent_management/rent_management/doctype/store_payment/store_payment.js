@@ -21,5 +21,17 @@ frappe.ui.form.on('Store Payment', {
 
 				
 		})
-	}
+	},
+	allocate: function(frm){
+		frappe.call({
+			doc : frm.doc,
+			method : 'allocate_outstanding',
+			freeze : true,
+			freeze_message : 'Getting All Items'
+		}).then((res) => {
+				refresh_field('invoices_reference');
+				refresh_field('rent_reference');	
+		})
+	},
+
 });
