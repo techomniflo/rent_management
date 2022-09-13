@@ -25,11 +25,11 @@ class StorePayment(Document):
 		if self.rent_reference:
 			allocate=self.allocate_to_credit
 			for i in self.rent_reference:
-				if allocate>=i.outstanding:
-					i.allocated=i.outstanding
-					allocate=allocate-i.outstanding
+				if allocate>=i.outstanding_amount:
+					i.allocate=i.outstanding_amount
+					allocate=allocate-i.outstanding_amount
 				else:
-					i.allocated=allocate
+					i.allocate=allocate
 					allocate=allocate-allocate
 
 	@frappe.whitelist()
