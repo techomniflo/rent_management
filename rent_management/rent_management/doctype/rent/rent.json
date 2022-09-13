@@ -16,7 +16,7 @@
   "section_break_5",
   "from_date",
   "to_date",
-  "rent",
+  "amount",
   "outstanding_amount",
   "credit_to",
   "debit_to",
@@ -63,7 +63,8 @@
    "fieldname": "outstanding_amount",
    "fieldtype": "Currency",
    "label": "Outstanding Amount",
-   "non_negative": 1
+   "non_negative": 1,
+   "read_only": 1
   },
   {
    "fieldname": "from_date",
@@ -85,7 +86,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "Rent-.YYYY.-\nRENT-.YYYY.-\nOPS-R-.YYYY.-"
+   "options": "OPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
   },
   {
    "default": "Debtors - OS",
@@ -106,18 +107,18 @@
    "reqd": 1
   },
   {
-   "fieldname": "rent",
+   "fieldname": "amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Rent Amount",
+   "label": "Amount",
    "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-12 13:38:59.749857",
+ "modified": "2022-09-13 19:18:29.130428",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Rent",

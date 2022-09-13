@@ -17,5 +17,8 @@ frappe.ui.form.on('Rent', {
 				frappe.set_route("query-report", "General Ledger");
 			}, __('View'));
 	}
+},
+	amount: function(frm){
+	frm.set_value('outstanding_amount',frm.doc.amount)
 }
 });
