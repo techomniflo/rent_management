@@ -33,7 +33,9 @@ class Rent(AccountsController):
 		frappe.msgprint(str(gl_map))
 		gl_map.append(
 			self.get_gl_dict(
-						{
+						{	
+							"against_voucher_type": self.discount_type,
+							"against_voucher": self.name,
 							"account": 'Debtors - OS',
 							"party_type": "Customer",
 							"party": self.customer,
@@ -42,8 +44,6 @@ class Rent(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"credit_in_account_currency": self.amount,
-							"against_voucher_type": self.discount_type,
-							"against_voucher": self.name,
 							"remarks": "Rent collected",
 							"cost_center": 'Main - OS'
 						},
@@ -52,7 +52,9 @@ class Rent(AccountsController):
 		)
 		gl_map.append(
 			self.get_gl_dict(
-						{
+						{	
+							"against_voucher_type": self.discount_type,
+							"against_voucher": self.name,
 							"account": 'Marketing Expenses - OS',
 							"party_type": "",
 							"party": "",
@@ -61,8 +63,6 @@ class Rent(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"debit_in_account_currency": self.amount,
-							"against_voucher_type": self.discount_type,
-							"against_voucher": self.name,
 							"remarks": "",
 							"cost_center": 'Main - OS'
 						},
