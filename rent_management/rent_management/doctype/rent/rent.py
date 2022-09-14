@@ -34,8 +34,8 @@ class Rent(AccountsController):
 		gl_map.append(
 			self.get_gl_dict(
 						{	
-							"against_voucher_type": self.discount_type,
-							"against_voucher": self.name,
+							# "against_voucher_type": self.discount_type,
+							# "against_voucher": self.name,
 							"account": 'Debtors - OS',
 							"party_type": "Customer",
 							"party": self.customer,
@@ -53,8 +53,8 @@ class Rent(AccountsController):
 		gl_map.append(
 			self.get_gl_dict(
 						{	
-							"against_voucher_type": self.discount_type,
-							"against_voucher": self.name,
+							# "against_voucher_type": self.discount_type,
+							# "against_voucher": self.name,
 							"account": 'Marketing Expenses - OS',
 							"party_type": "",
 							"party": "",
