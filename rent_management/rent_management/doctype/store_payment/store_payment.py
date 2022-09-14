@@ -3,11 +3,34 @@
 
 import frappe
 from frappe.model.document import Document
-
+from frappe.utils import today
 class StorePayment(Document):
-	def on_submit():
-		pass
-	
+	def on_submit(self):
+			payment_entry=frappe.new_doc('Payment Entry')
+			payment_entry.posting_date=today()
+			payment_entry.payment_type='Receive'
+			payment_entry.mode_of_payment='Cash'
+			payment_entry.party_type='Customer'
+			payment_entry.party=self.customer
+			payment_entry.paid_from='Debtors - OS'
+			payment_entry.paid_from_account_currency='INR'
+			payment_entry.paid_to='Cash - OS'
+			payment_entry.paid_to_account_currency='INR'
+			payment_entry.paid_amount=self.allocate
+			payment_entry.received_amount:self.allocate
+			if self.invoices_reference:
+				for i in self.invoices_reference:
+					payment_entry.append('references',{
+						'reference_doctype':i.type,
+						'due_date':i.due_date,
+						'reference_name':i.invoice_name,
+						'total_amount':i.grand_total,
+						'outstanding_amount':i.outstanding,
+						'allocated_amount':i.allocated
+					})
+			payment_entry.save(ignore_permissions = True)
+			frappe.msgprint(payment_entry.name)
+
 	@frappe.whitelist()
 	def allocate_outstanding(self):
 		if self.invoices_reference:
