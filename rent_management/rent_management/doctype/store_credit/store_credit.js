@@ -1,7 +1,8 @@
 // Copyright (c) 2022, Gourav Saini and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Rent', {
+
+frappe.ui.form.on('Store Credit', {
 	refresh: function(frm) {
 		if(frm.doc.docstatus > 0) {
 			frm.add_custom_button(__('Ledger'), function() {
@@ -22,3 +23,4 @@ frappe.ui.form.on('Rent', {
 	frm.set_value('outstanding_amount',frm.doc.amount)
 }
 });
+

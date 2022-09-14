@@ -1,16 +1,15 @@
 # Copyright (c) 2022, Gourav Saini and contributors
 # For license information, please see license.txt
 
-
 import frappe
 from frappe.model.document import Document
 # from erpnext.controllers.accounts_controller import get_gl_dict
 from frappe.utils import cint, cstr, flt, fmt_money, formatdate, get_link_to_form, nowdate
 from erpnext.controllers.accounts_controller import AccountsController
 
-class Rent(AccountsController):
+class StoreCredit(AccountsController):
 	def __init__(self, *args, **kwargs):
-		super(Rent, self).__init__(*args, **kwargs)
+		super(StoreCredit, self).__init__(*args, **kwargs)
 	def validate(self):
 		pass
 	def on_submit(self):
@@ -26,11 +25,9 @@ class Rent(AccountsController):
 		gl_map=self.build_gl_map()
 		if gl_map:
 			update_outstanding=0
-			frappe.msgprint(str(cancel))
 			make_gl_entries(gl_map, cancel=cancel, adv_adj=adv_adj, update_outstanding=update_outstanding)
 	def build_gl_map(self):
 		gl_map=[]
-		frappe.msgprint(str(gl_map))
 		gl_map.append(
 			self.get_gl_dict(
 						{	

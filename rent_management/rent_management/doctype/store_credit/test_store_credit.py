@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestRent(FrappeTestCase):
+class TestStoreCredit(FrappeTestCase):
 	pass

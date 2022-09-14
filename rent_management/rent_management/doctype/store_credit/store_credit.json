@@ -25,6 +25,12 @@
  ],
  "fields": [
   {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "\nOPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
+  },
+  {
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
@@ -40,17 +46,15 @@
    "label": "Customer Name"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Rent",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
   },
   {
    "fieldname": "posting_date",
@@ -63,13 +67,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "outstanding_amount",
-   "fieldtype": "Currency",
-   "label": "Outstanding Amount",
-   "non_negative": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "from_date",
    "fieldtype": "Date",
    "label": "From Date"
@@ -80,17 +77,26 @@
    "label": "To Date"
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Amount",
+   "non_negative": 1,
    "reqd": 1
   },
   {
-   "fieldname": "naming_series",
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_type",
    "fieldtype": "Select",
-   "label": "Series",
-   "options": "\nOPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
+   "label": "Discount Type",
+   "options": "Display Discount\nInvoice Discount"
   },
   {
    "default": "Debtors - OS",
@@ -111,28 +117,22 @@
    "reqd": 1
   },
   {
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Amount",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "discount_type",
-   "fieldtype": "Select",
-   "label": "Discount Type",
-   "options": "Display Discount\nCredit Note"
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Store Credit",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-13 19:29:28.874003",
+ "modified": "2022-09-14 15:38:10.583925",
  "modified_by": "Administrator",
  "module": "Rent Management",
- "name": "Rent",
+ "name": "Store Credit",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
