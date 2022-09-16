@@ -20,7 +20,7 @@ class StorePayment(Document):
 		payment_entry.paid_to='Cash - OS'
 		payment_entry.paid_to_account_currency='INR'
 		payment_entry.paid_amount=self.allocate
-		payment_entry.received_amount:self.allocate
+		payment_entry.received_amount=self.allocate
 		company_currency=frappe.get_doc("Company",self.company).default_currency
 		if payment_entry.paid_from_account_currency==company_currency:
 			payment_entry.source_exchange_rate=1
