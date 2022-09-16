@@ -15,10 +15,10 @@ class StorePayment(Document):
 		payment_entry.mode_of_payment='Cash'
 		payment_entry.party_type='Customer'
 		payment_entry.party=self.customer
-		payment_entry.paid_from='Debtors - OS'
-		payment_entry.paid_from_account_currency='INR'
-		payment_entry.paid_to='Cash - OS'
-		payment_entry.paid_to_account_currency='INR'
+		payment_entry.paid_from=self.paid_from
+		payment_entry.paid_from_account_currency=self.paid_from_account_currency
+		payment_entry.paid_to=self.paid_to
+		payment_entry.paid_to_account_currency=self.paid_to_account_currency
 		payment_entry.paid_amount=self.allocate
 		payment_entry.received_amount=self.allocate
 		company_currency=frappe.get_doc("Company",self.company).default_currency
@@ -41,6 +41,8 @@ class StorePayment(Document):
 					'allocated_amount':i.allocated
 				})
 		payment_entry.save(ignore_permissions = True)
+		payment_entry.submit()
+		self.invoice_payment_entry_reference=payment_entry.name
 		frappe.msgprint(payment_entry.name)
 
 	@frappe.whitelist()

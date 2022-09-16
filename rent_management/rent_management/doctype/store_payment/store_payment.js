@@ -2,9 +2,28 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Store Payment', {
-	// refresh: function(frm) {
-
-	// }
+	refresh:function(frm){
+		if (frm.doc.invoices_reference){
+			cur_frm.set_df_property("paid_from","hidden",0)
+			cur_frm.set_df_property("paid_from","reqd",1)
+			cur_frm.set_df_property("paid_from_account_currency","hidden",0)
+			cur_frm.set_df_property("paid_from_account_currency","reqd",1)
+			cur_frm.set_df_property("paid_to","hidden",0)
+			cur_frm.set_df_property("paid_to","reqd",1)
+			cur_frm.set_df_property("paid_to_account_currency","hidden",0)
+			cur_frm.set_df_property("paid_to_account_currency","reqd",1)}
+	},
+	after_save: function(frm) {
+		if (frm.doc.invoices_reference){
+			cur_frm.set_df_property("paid_from","hidden",0)
+			cur_frm.set_df_property("paid_from","reqd",1)
+			cur_frm.set_df_property("paid_from_account_currency","hidden",0)
+			cur_frm.set_df_property("paid_from_account_currency","reqd",1)
+			cur_frm.set_df_property("paid_to","hidden",0)
+			cur_frm.set_df_property("paid_to","reqd",1)
+			cur_frm.set_df_property("paid_to_account_currency","hidden",0)
+			cur_frm.set_df_property("paid_to_account_currency","reqd",1)}
+	},
 	get_outstanding(frm){
 		cur_frm.clear_table("invoices_reference");
 		cur_frm.clear_table("rent_reference");
