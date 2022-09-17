@@ -74,5 +74,25 @@ frappe.ui.form.on('Store Payment', {
 				refresh_field('rent_reference');	
 		})
 	},
+	payment_type:function(frm){
+		frappe.call({
+			doc : frm.doc,
+			method : 'get_negative_outstanding',
+			freeze : true,
+			freeze_message : 'Getting All Items'
+		}).then((res) => {
+				refresh_field('invoices_reference');
+				refresh_field('rent_reference');	
+		})
+
+		// if (frm.doc.payment_type=='Pay'){
+		// 	frm.set_value("paid_from","Cash - OS")
+		// 	frm.set_value("paid_to",'Debtors - OS')
+		// }
+		// else{
+		// 	frm.set_value("paid_from","Debtors - OS")
+		// 	frm.set_value("paid_to",'Cash - OS')
+		// }
+	}
 
 });

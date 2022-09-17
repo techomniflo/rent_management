@@ -10,6 +10,13 @@ class StorePayment(Document):
 		payment_entry.cancel()
 	def on_submit(self):
 		self.make_payment_entry()
+	# def on_save(self):
+	# 	print("\n  hello gourav")
+	# 	if self.payment_type=='pay':
+	# 		print("\n pleasse find me")
+	# 		self.paid_from='Cash - OS'
+	# 		self.paid_to='Debtors - OS'
+	# 		self.save(ignore_permissions = True)
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
 		payment_entry.posting_date=today()
@@ -45,9 +52,8 @@ class StorePayment(Document):
 				})
 		payment_entry.save(ignore_permissions = True)
 		payment_entry.submit()
-		self.invoice_payment_entry_reference=payment_entry.name
-		frappe.msgprint(payment_entry.name)
-
+		self.db_set("invoice_payment_entry_reference", payment_entry.name, update_modified=False)
+		
 	@frappe.whitelist()
 	def allocate_outstanding(self):
 		if self.invoices_reference:
@@ -94,3 +100,14 @@ class StorePayment(Document):
 			'amount':rent.amount,
 			'outstanding_amount':rent.outstanding_amount
 			})
+			
+	@frappe.whitelist()
+	def get_negative_outstanding(self):
+		values={'customer':self.customer,'company':self.company}
+		negative_invoices=frappe.db.sql("""select si.name from `tabSales Invoice` as si where si.outstanding_amount>0 and si.docstatus=1 and si.company=%(company)s and si.customer=%(customer)s;""",values=values)
+		if negative_invoices:
+			self.set_value("paid_from","Cash - OS")
+			self.set_value("paid_to",'Debtors - OS')
+		else:
+			frappe.msgprint("Cann't Pay Without Negative Outstanding Invoice")
+			self.set_value("payment_type","Receive")
