@@ -81,6 +81,7 @@ frappe.ui.form.on('Store Payment', {
 			freeze : true,
 			freeze_message : 'Getting All Items'
 		}).then((res) => {
+			console.log(res)
 				refresh_field('invoices_reference');
 				refresh_field('rent_reference');	
 		})

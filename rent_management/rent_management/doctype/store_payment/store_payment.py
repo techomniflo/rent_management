@@ -107,8 +107,6 @@ class StorePayment(Document):
 		values={'customer':self.customer,'company':self.company}
 		negative_invoices=frappe.db.sql("""select si.name from `tabSales Invoice` as si where si.outstanding_amount>0 and si.docstatus=1 and si.company=%(company)s and si.customer=%(customer)s;""",values=values)
 		if negative_invoices:
-			self.set_value("paid_from","Cash - OS")
-			self.set_value("paid_to",'Debtors - OS')
+			return True
 		else:
-			frappe.msgprint("Cann't Pay Without Negative Outstanding Invoice")
-			self.set_value("payment_type","Receive")
+			return False
