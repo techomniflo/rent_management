@@ -5,6 +5,9 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import today
 class StorePayment(Document):
+	def on_cancel(self):
+		payment_entry=frappe.get_doc('Payment Entry',self.invoice_payment_entry_reference)
+		payment_entry.cancel()
 	def on_submit(self):
 		self.make_payment_entry()
 	def make_payment_entry(self):

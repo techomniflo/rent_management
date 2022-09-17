@@ -12,6 +12,17 @@ frappe.ui.form.on('Store Payment', {
 			cur_frm.set_df_property("paid_to","reqd",1)
 			cur_frm.set_df_property("paid_to_account_currency","hidden",0)
 			cur_frm.set_df_property("paid_to_account_currency","reqd",1)}
+		
+		if (frm.doc.rent_reference){
+			cur_frm.set_df_property("credit_paid_from","hidden",0)
+			cur_frm.set_df_property("credit_paid_from","reqd",1)
+			cur_frm.set_df_property("credit_paid_from_account_currency","hidden",0)
+			cur_frm.set_df_property("credit_paid_from_account_currency","reqd",1)
+			cur_frm.set_df_property("credit_paid_to","hidden",0)
+			cur_frm.set_df_property("credit_paid_to","reqd",1)
+			cur_frm.set_df_property("credit_paid_to_account_currency","hidden",0)
+			cur_frm.set_df_property("credit_paid_to_account_currency","reqd",1)
+		}
 	},
 	after_save: function(frm) {
 		if (frm.doc.invoices_reference){

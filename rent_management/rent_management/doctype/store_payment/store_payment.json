@@ -19,15 +19,21 @@
   "column_break_10",
   "paid_to",
   "paid_to_account_currency",
+  "accounts_for_credit_section",
+  "credit_paid_from",
+  "credit_paid_from_account_currency",
+  "column_break_16",
+  "credit_paid_to",
+  "credit_paid_to_account_currency",
   "reference_section",
   "get_outstanding",
+  "payment_type",
   "allocate",
+  "invoice_payment_entry_reference",
   "invoices_reference",
   "allocate_to_credit",
   "rent_reference",
-  "invoice_payment_entry_reference",
-  "amended_from",
-  "data_21"
+  "amended_from"
  ],
  "fields": [
   {
@@ -117,7 +123,7 @@
   {
    "fieldname": "accounts_section",
    "fieldtype": "Section Break",
-   "label": "Accounts"
+   "label": "Accounts For Invoices"
   },
   {
    "default": "Debtors - OS",
@@ -159,14 +165,57 @@
    "options": "Currency"
   },
   {
-   "fieldname": "data_21",
-   "fieldtype": "Data"
+   "fieldname": "accounts_for_credit_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts For Credit"
+  },
+  {
+   "default": "Cash - OS",
+   "fieldname": "credit_paid_from",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Account paid From",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Debtors - OS",
+   "fieldname": "credit_paid_to",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Account paid To",
+   "options": "Account"
+  },
+  {
+   "default": "INR",
+   "fieldname": "credit_paid_to_account_currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Account Currency",
+   "options": "Currency"
+  },
+  {
+   "default": "INR",
+   "fieldname": "credit_paid_from_account_currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Account Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "payment_type",
+   "fieldtype": "Select",
+   "label": "Payment Type",
+   "options": "Receive\nPay"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-16 19:06:56.816031",
+ "modified": "2022-09-17 16:30:26.234731",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Store Payment",
