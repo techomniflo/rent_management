@@ -1,6 +1,6 @@
 from . import __version__ as app_version
 import rent_management
-import erpnext
+# import erpnext
 
 app_name = "rent_management"
 app_title = "Rent Management"
