@@ -103,7 +103,6 @@ class StorePayment(Document):
 
 	@frappe.whitelist()
 	def get_negative_outstanding(self):
-		frappe.msgprint("hello gourav")
 		values={'customer':self.customer,'company':self.company}
 		negative_invoices=frappe.db.sql("""select si.name from `tabSales Invoice` as si where si.outstanding_amount>0 and si.docstatus=1 and si.company=%(company)s and si.customer=%(customer)s;""",values=values)
 		if negative_invoices:
