@@ -10,13 +10,7 @@ class StorePayment(Document):
 		payment_entry.cancel()
 	def on_submit(self):
 		self.make_payment_entry()
-	# def on_save(self):
-	# 	print("\n  hello gourav")
-	# 	if self.payment_type=='pay':
-	# 		print("\n pleasse find me")
-	# 		self.paid_from='Cash - OS'
-	# 		self.paid_to='Debtors - OS'
-	# 		self.save(ignore_permissions = True)
+
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
 		payment_entry.posting_date=today()
