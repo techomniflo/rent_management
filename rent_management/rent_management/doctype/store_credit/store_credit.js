@@ -20,7 +20,7 @@ frappe.ui.form.on('Store Credit', {
 	}
 },
 	amount: function(frm){
-	frm.set_value('outstanding_amount',frm.doc.amount)
+	frm.set_value('outstanding_amount',frm.doc.grand_total)
 }
 });
 
