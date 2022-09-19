@@ -92,7 +92,7 @@ frappe.ui.form.on('Store Payment', {
 				else{
 					frm.set_value("paid_from","Debtors - OS")
 					frm.set_value("paid_to",'Cash - OS')
-					frm.set_value("payemnt_type","Receive")
+					frm.set_value("payment_type","Receive")
 					frappe.msgprint("Cann't pay to Customer to without negative outstanding Invoices")
 				}
 	
