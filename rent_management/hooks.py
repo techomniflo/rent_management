@@ -143,7 +143,7 @@ doctype_js={"Payment Entry": "public/payment_entry.js"}
 # ------------------------------
 #
 override_whitelisted_methods = {
-    "erpnext.accounts.doctype.payment_entry.payment_entry.get_reference_details":"rent_management.rent_management.doctype_override.payment_entry.get_reference_details"
+    # "erpnext.accounts.doctype.payment_entry.payment_entry.get_reference_details":"rent_management.rent_management.doctype_override.payment_entry.get_reference_details"
 # 	"frappe.desk.doctype.event.event.get_events": "rent_management.event.get_events"
 }
 #
