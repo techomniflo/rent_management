@@ -1,5 +1,5 @@
-from . import __version__ as app_version
-import rent_management
+from . import __version__ as _app_version
+import rent_management as _rent_management
 # import erpnext
 
 app_name = "rent_management"
