@@ -84,7 +84,7 @@ class StorePayment(Document):
 				'outstanding':invoices.outstanding_amount,
 				'due_date':invoices.due_date
 			})
-		rent_invoices=frappe.db.sql("""select r.name,r.grand_total,r.outstanding_amount,r.from_date,r.to_date,r.discount_type from `tabStore Credit` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount<0 and r.docstatus=1 order by r.posting_date""",values=values,as_dict=True)
+		rent_invoices=frappe.db.sql("""select r.name,r.grand_total,r.outstanding_amount,r.from_date,r.to_date,r.discount_type from `tabStore Credit` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount>0 and r.docstatus=1 order by r.posting_date""",values=values,as_dict=True)
 		for rent in rent_invoices:
 			self.append('rent_reference',{
 			'type':rent.discount_type,
@@ -99,7 +99,7 @@ class StorePayment(Document):
 	def get_negative_outstanding(self):
 		values={'customer':self.customer,'company':self.company}
 		negative_invoices=frappe.db.sql("""select si.name from `tabSales Invoice` as si where si.outstanding_amount<0 and si.docstatus=1 and si.company=%(company)s and si.customer=%(customer)s;""",values=values)
-		if negative_invoices:
+		if len(negative_invoices)>0:
 			return True
 		else:
 			return False
