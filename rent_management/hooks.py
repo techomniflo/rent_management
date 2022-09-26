@@ -1,5 +1,5 @@
-from . import __version__ as _app_version
-import rent_management as _rent_management
+from . import __version__ as app_version
+# import rent_management as rent_management
 # import erpnext as _erpnext
 
 app_name = "rent_management"
@@ -107,10 +107,7 @@ doctype_js = {"Payment Entry": "public/payment_entry.js"}
 
 doc_events = {
 	"Payment Entry": {
-		"onload": "rent_management.rent_management.doctype_override.payment_entry.override_get_reference_details",
-		"refresh": "rent_management.rent_management.doctype_override.payment_entry.override_get_reference_details",
-		"reload": "rent_management.rent_management.doctype_override.payment_entry.override_get_reference_details",
-        "before_insert":"rent_management.rent_management.doctype_override.payment_entry.override_get_reference_details"
+		"before_submit": "rent_management.rent_management.doctype_override.payment_entry.on_submit"
 	}
 }
 
