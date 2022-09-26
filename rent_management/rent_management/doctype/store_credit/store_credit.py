@@ -33,10 +33,10 @@ class StoreCredit(AccountsController):
 						{	
 							# "against_voucher_type": self.discount_type,
 							# "against_voucher": self.name,
-							"account": 'Debtors - OS',
+							"account": self.credit_to,
 							"party_type": "Customer",
 							"party": self.customer,
-							"against": 'Marketing Expenses - OS',
+							"against": self.debit_to,
 							"credit": self.grand_total,
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
@@ -52,7 +52,7 @@ class StoreCredit(AccountsController):
 						{	
 							# "against_voucher_type": self.discount_type,
 							# "against_voucher": self.name,
-							"account": 'Marketing Expenses - OS',
+							"account": self.debit_to,
 							"party_type": "",
 							"party": "",
 							"against": self.customer,
@@ -68,4 +68,3 @@ class StoreCredit(AccountsController):
 		)
 		# frappe.msgprint(str(gl_map))
 		return gl_map
-		
