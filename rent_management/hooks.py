@@ -107,7 +107,10 @@ doctype_js = {"Payment Entry": "public/payment_entry.js"}
 
 doc_events = {
 	"Payment Entry": {
-		"before_submit": "rent_management.rent_management.doctype_override.payment_entry.on_submit"
+		"before_submit": "rent_management.rent_management.doctype_override.payment_entry.before_submit",
+		"before_cancel": "rent_management.rent_management.doctype_override.payment_entry.before_cancel",
+		"on_submit": "rent_management.rent_management.doctype_override.payment_entry.on_submit",
+		"on_cancel":"rent_management.rent_management.doctype_override.payment_entry.on_cancel"
 	}
 }
 

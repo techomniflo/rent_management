@@ -10,12 +10,18 @@ from erpnext.hr.doctype.expense_claim.expense_claim import (
 	update_reimbursed_amount,
 )
 
-def on_submit(doc,method):
+def before_submit(doc,method):
     store_credit_outstanding(doc,method,cancel=False)
-    update_outstanding_amounts(doc,method)
 
 def before_cancel(doc,method):
     store_credit_outstanding(doc,method,cancel=True)
+
+def on_submit(doc,method):
+    update_outstanding_amounts(doc,method)
+
+def on_cancel(doc,method):
+    update_outstanding_amounts(doc,method)
+
 
 def update_outstanding_amounts(doc,method):
 		set_missing_ref_details(doc,force=True)
