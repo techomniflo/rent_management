@@ -11,9 +11,13 @@ from erpnext.hr.doctype.expense_claim.expense_claim import (
 	get_outstanding_amount_for_claim,
 	update_reimbursed_amount,
 )
+from erpnext.accounts.doctype.invoice_discounting.invoice_discounting import (
+	get_party_account_based_on_invoice_discounting,
+)
 
 def validate(doc,method):
 	set_missing_values(doc)
+	validate_reference_documents(doc)
 
 def before_submit(doc,method):
     store_credit_outstanding(doc,method,cancel=False)
@@ -197,53 +201,119 @@ def get_account_details(account, date, cost_center=None):
 
 
 def set_missing_values(self):
-		if self.payment_type == "Internal Transfer":
-			for field in (
-				"party",
-				"party_balance",
-				"total_allocated_amount",
-				"base_total_allocated_amount",
-				"unallocated_amount",
-			):
-				self.set(field, None)
-			self.references = []
-		else:
-			if not self.party_type:
-				frappe.throw(_("Party Type is mandatory"))
+	if self.payment_type == "Internal Transfer":
+		for field in (
+			"party",
+			"party_balance",
+			"total_allocated_amount",
+			"base_total_allocated_amount",
+			"unallocated_amount",
+		):
+			self.set(field, None)
+		self.references = []
+	else:
+		if not self.party_type:
+			frappe.throw(_("Party Type is mandatory"))
 
-			if not self.party:
-				frappe.throw(_("Party is mandatory"))
+		if not self.party:
+			frappe.throw(_("Party is mandatory"))
 
-			_party_name = (
-				"title" if self.party_type in ("Student", "Shareholder") else self.party_type.lower() + "_name"
-			)
-			self.party_name = frappe.db.get_value(self.party_type, self.party, _party_name)
-
-		if self.party:
-			if not self.party_balance:
-				self.party_balance = get_balance_on(
-					party_type=self.party_type, party=self.party, date=self.posting_date, company=self.company
-				)
-
-			if not self.party_account:
-				party_account = get_party_account(self.party_type, self.party, self.company)
-				self.set(self.party_account_field, party_account)
-				self.party_account = party_account
-
-		if self.paid_from and not (self.paid_from_account_currency or self.paid_from_account_balance):
-			acc = get_account_details(self.paid_from, self.posting_date, self.cost_center)
-			self.paid_from_account_currency = acc.account_currency
-			self.paid_from_account_balance = acc.account_balance
-
-		if self.paid_to and not (self.paid_to_account_currency or self.paid_to_account_balance):
-			acc = get_account_details(self.paid_to, self.posting_date, self.cost_center)
-			self.paid_to_account_currency = acc.account_currency
-			self.paid_to_account_balance = acc.account_balance
-
-		self.party_account_currency = (
-			self.paid_from_account_currency
-			if self.payment_type == "Receive"
-			else self.paid_to_account_currency
+		_party_name = (
+			"title" if self.party_type in ("Student", "Shareholder") else self.party_type.lower() + "_name"
 		)
+		self.party_name = frappe.db.get_value(self.party_type, self.party, _party_name)
 
-		set_missing_ref_details(self)
+	if self.party:
+		if not self.party_balance:
+			self.party_balance = get_balance_on(
+				party_type=self.party_type, party=self.party, date=self.posting_date, company=self.company
+			)
+
+		if not self.party_account:
+			party_account = get_party_account(self.party_type, self.party, self.company)
+			self.set(self.party_account_field, party_account)
+			self.party_account = party_account
+
+	if self.paid_from and not (self.paid_from_account_currency or self.paid_from_account_balance):
+		acc = get_account_details(self.paid_from, self.posting_date, self.cost_center)
+		self.paid_from_account_currency = acc.account_currency
+		self.paid_from_account_balance = acc.account_balance
+
+	if self.paid_to and not (self.paid_to_account_currency or self.paid_to_account_balance):
+		acc = get_account_details(self.paid_to, self.posting_date, self.cost_center)
+		self.paid_to_account_currency = acc.account_currency
+		self.paid_to_account_balance = acc.account_balance
+
+	self.party_account_currency = (
+		self.paid_from_account_currency
+		if self.payment_type == "Receive"
+		else self.paid_to_account_currency
+	)
+
+	set_missing_ref_details(self)
+	
+def validate_reference_documents(self):
+	if self.party_type == "Student":
+		valid_reference_doctypes = ("Fees", "Journal Entry")
+	elif self.party_type == "Customer":
+		valid_reference_doctypes = ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning","Credit Note")
+	elif self.party_type == "Supplier":
+		valid_reference_doctypes = ("Purchase Order", "Purchase Invoice", "Journal Entry")
+	elif self.party_type == "Employee":
+		valid_reference_doctypes = ("Expense Claim", "Journal Entry", "Employee Advance", "Gratuity")
+	elif self.party_type == "Shareholder":
+		valid_reference_doctypes = "Journal Entry"
+	elif self.party_type == "Donor":
+		valid_reference_doctypes = "Donation"
+
+	for d in self.get("references"):
+		if not d.allocated_amount:
+			continue
+		if d.reference_doctype not in valid_reference_doctypes:
+			frappe.throw(
+				_("Reference Doctype must be one of {0}").format(comma_or(valid_reference_doctypes))
+			)
+
+		elif d.reference_name:
+			if not frappe.db.exists(d.reference_doctype, d.reference_name):
+				frappe.throw(_("{0} {1} does not exist").format(d.reference_doctype, d.reference_name))
+			else:
+				ref_doc = frappe.get_doc(d.reference_doctype, d.reference_name)
+
+				if d.reference_doctype != "Journal Entry":
+					if self.party != ref_doc.get(scrub(self.party_type)):
+						frappe.throw(
+							_("{0} {1} is not associated with {2} {3}").format(
+								d.reference_doctype, d.reference_name, self.party_type, self.party
+							)
+						)
+				else:
+					self.validate_journal_entry()
+
+				if d.reference_doctype in ("Sales Invoice", "Purchase Invoice", "Expense Claim", "Fees"):
+					if self.party_type == "Customer":
+						ref_party_account = (
+							get_party_account_based_on_invoice_discounting(d.reference_name) or ref_doc.debit_to
+						)
+					elif self.party_type == "Student":
+						ref_party_account = ref_doc.receivable_account
+					elif self.party_type == "Supplier":
+						ref_party_account = ref_doc.credit_to
+					elif self.party_type == "Employee":
+						ref_party_account = ref_doc.payable_account
+
+					if ref_party_account != self.party_account:
+						frappe.throw(
+							_("{0} {1} is associated with {2}, but Party Account is {3}").format(
+								d.reference_doctype, d.reference_name, ref_party_account, self.party_account
+							)
+						)
+
+					if ref_doc.doctype == "Purchase Invoice" and ref_doc.get("on_hold"):
+						frappe.throw(
+							_("{0} {1} is on hold").format(d.reference_doctype, d.reference_name),
+							title=_("Invalid Invoice"),
+						)
+
+				if ref_doc.docstatus != 1:
+					frappe.throw(_("{0} {1} must be submitted").format(d.reference_doctype, d.reference_name))
