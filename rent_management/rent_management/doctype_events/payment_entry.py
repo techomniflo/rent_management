@@ -1,5 +1,7 @@
 import frappe
 import erpnext
+from erpnext.accounts.party import get_party_account
+from erpnext.accounts.utils import get_account_currency, get_balance_on, get_outstanding_invoices
 from frappe import ValidationError, _, qb, scrub, throw
 from frappe.utils import cint, comma_or, flt, getdate
 from erpnext.setup.utils import get_exchange_rate
@@ -9,6 +11,9 @@ from erpnext.hr.doctype.expense_claim.expense_claim import (
 	get_outstanding_amount_for_claim,
 	update_reimbursed_amount,
 )
+
+def validate(doc,method):
+	set_missing_values(doc)
 
 def before_submit(doc,method):
     store_credit_outstanding(doc,method,cancel=False)
@@ -163,3 +168,82 @@ def get_outstanding_on_journal_entry(name):
 	outstanding_amount = res[0].get("outstanding_amount", 0) if res else 0
 
 	return outstanding_amount
+
+@frappe.whitelist()
+def get_account_details(account, date, cost_center=None):
+	frappe.has_permission("Payment Entry", throw=True)
+
+	# to check if the passed account is accessible under reference doctype Payment Entry
+	account_list = frappe.get_list(
+		"Account", {"name": account}, reference_doctype="Payment Entry", limit=1
+	)
+
+	# There might be some user permissions which will allow account under certain doctypes
+	# except for Payment Entry, only in such case we should throw permission error
+	if not account_list:
+		frappe.throw(_("Account: {0} is not permitted under Payment Entry").format(account))
+
+	account_balance = get_balance_on(
+		account, date, cost_center=cost_center, ignore_account_permission=True
+	)
+
+	return frappe._dict(
+		{
+			"account_currency": get_account_currency(account),
+			"account_balance": account_balance,
+			"account_type": frappe.db.get_value("Account", account, "account_type"),
+		}
+	)
+
+
+def set_missing_values(self):
+		if self.payment_type == "Internal Transfer":
+			for field in (
+				"party",
+				"party_balance",
+				"total_allocated_amount",
+				"base_total_allocated_amount",
+				"unallocated_amount",
+			):
+				self.set(field, None)
+			self.references = []
+		else:
+			if not self.party_type:
+				frappe.throw(_("Party Type is mandatory"))
+
+			if not self.party:
+				frappe.throw(_("Party is mandatory"))
+
+			_party_name = (
+				"title" if self.party_type in ("Student", "Shareholder") else self.party_type.lower() + "_name"
+			)
+			self.party_name = frappe.db.get_value(self.party_type, self.party, _party_name)
+
+		if self.party:
+			if not self.party_balance:
+				self.party_balance = get_balance_on(
+					party_type=self.party_type, party=self.party, date=self.posting_date, company=self.company
+				)
+
+			if not self.party_account:
+				party_account = get_party_account(self.party_type, self.party, self.company)
+				self.set(self.party_account_field, party_account)
+				self.party_account = party_account
+
+		if self.paid_from and not (self.paid_from_account_currency or self.paid_from_account_balance):
+			acc = get_account_details(self.paid_from, self.posting_date, self.cost_center)
+			self.paid_from_account_currency = acc.account_currency
+			self.paid_from_account_balance = acc.account_balance
+
+		if self.paid_to and not (self.paid_to_account_currency or self.paid_to_account_balance):
+			acc = get_account_details(self.paid_to, self.posting_date, self.cost_center)
+			self.paid_to_account_currency = acc.account_currency
+			self.paid_to_account_balance = acc.account_balance
+
+		self.party_account_currency = (
+			self.paid_from_account_currency
+			if self.payment_type == "Receive"
+			else self.paid_to_account_currency
+		)
+
+		set_missing_ref_details(self)
