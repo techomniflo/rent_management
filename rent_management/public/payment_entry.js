@@ -1314,7 +1314,7 @@ frappe.ui.form.on('Payment Entry Reference', {
 		var row = locals[cdt][cdn];
 		if (row.reference_name && row.reference_doctype) {
 			return frappe.call({
-				method: "rent_management.rent_management.doctype_override.payment_entry.get_reference_details",
+				method: "rent_management.rent_management.doctype_events.payment_entry.get_reference_details",
 				args: {
 					reference_doctype: row.reference_doctype,
 					reference_name: row.reference_name,
