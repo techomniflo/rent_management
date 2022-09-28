@@ -66,7 +66,7 @@ def store_credit_outstanding(doc,mehtod,cancel):
                 new_outstanding_amount=d.outstanding_amount-d.allocated_amount
             if new_outstanding_amount==0 or new_outstanding_amount<0:
                 # frappe.msgprint(dir(d))
-                frappe.db.set_value('placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
+                frappe.db.set_value('Placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
                 frappe.db.commit()
 
 @frappe.whitelist()
