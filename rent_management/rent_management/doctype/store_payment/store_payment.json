@@ -19,19 +19,12 @@
   "column_break_10",
   "paid_to",
   "paid_to_account_currency",
-  "accounts_for_credit_section",
-  "credit_paid_from",
-  "credit_paid_from_account_currency",
-  "column_break_16",
-  "credit_paid_to",
-  "credit_paid_to_account_currency",
   "reference_section",
   "get_outstanding",
   "payment_type",
   "allocate",
   "invoice_payment_entry_reference",
   "invoices_reference",
-  "allocate_to_credit",
   "rent_reference",
   "amended_from"
  ],
@@ -93,7 +86,7 @@
   {
    "fieldname": "allocate",
    "fieldtype": "Currency",
-   "label": "Allocate To Invoice",
+   "label": "Allocate",
    "non_negative": 1
   },
   {
@@ -110,11 +103,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "allocate_to_credit",
-   "fieldtype": "Currency",
-   "label": "Allocate To Credit"
-  },
-  {
    "fieldname": "invoice_payment_entry_reference",
    "fieldtype": "Data",
    "label": "Invoice Payment Entry Reference",
@@ -123,7 +111,7 @@
   {
    "fieldname": "accounts_section",
    "fieldtype": "Section Break",
-   "label": "Accounts For Invoices"
+   "label": "Accounts"
   },
   {
    "default": "Debtors - OS",
@@ -165,47 +153,6 @@
    "options": "Currency"
   },
   {
-   "fieldname": "accounts_for_credit_section",
-   "fieldtype": "Section Break",
-   "label": "Accounts For Credit"
-  },
-  {
-   "default": "Cash - OS",
-   "fieldname": "credit_paid_from",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Account paid From",
-   "options": "Account"
-  },
-  {
-   "fieldname": "column_break_16",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Debtors - OS",
-   "fieldname": "credit_paid_to",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Account paid To",
-   "options": "Account"
-  },
-  {
-   "default": "INR",
-   "fieldname": "credit_paid_to_account_currency",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Account Currency",
-   "options": "Currency"
-  },
-  {
-   "default": "INR",
-   "fieldname": "credit_paid_from_account_currency",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Account Currency",
-   "options": "Currency"
-  },
-  {
    "fieldname": "payment_type",
    "fieldtype": "Select",
    "label": "Payment Type",
@@ -215,7 +162,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-17 16:30:26.234731",
+ "modified": "2022-09-28 16:15:35.994774",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Store Payment",

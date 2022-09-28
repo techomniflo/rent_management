@@ -10,7 +10,15 @@ class StorePayment(Document):
 		payment_entry.cancel()
 	def on_submit(self):
 		self.make_payment_entry()
-
+	def validate(self):
+		total_allocate=0
+		if self.invoices_reference:
+			for i in self.invoices_reference:
+				total_allocate+=i.allocated
+		if self.rent_reference:
+			for i in self.rent_reference:
+				total_allocate+=i.allocate
+		self.allocate=total_allocate
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
 		payment_entry.posting_date=today()
@@ -59,18 +67,18 @@ class StorePayment(Document):
 				else:
 					i.allocated=allocate
 					allocate=allocate-allocate
-	
-	@frappe.whitelist()
-	def allocate_credit(self):
-		if self.rent_reference:
-			allocate=self.allocate_to_credit
-			for i in self.rent_reference:
-				if allocate>=i.outstanding_amount:
-					i.allocate=i.outstanding_amount
-					allocate=allocate-i.outstanding_amount
-				else:
-					i.allocate=allocate
-					allocate=allocate-allocate
+
+	# @frappe.whitelist()
+	# def allocate_credit(self):
+	# 	if self.rent_reference:
+	# 		allocate=self.allocate_to_credit
+	# 		for i in self.rent_reference:
+	# 			if allocate>=i.outstanding_amount:
+	# 				i.allocate=i.outstanding_amount
+	# 				allocate=allocate-i.outstanding_amount
+	# 			else:
+	# 				i.allocate=allocate
+	# 				allocate=allocate-allocate
 
 	@frappe.whitelist()
 	def fetch_items(self):

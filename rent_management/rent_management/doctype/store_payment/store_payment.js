@@ -12,17 +12,6 @@ frappe.ui.form.on('Store Payment', {
 			cur_frm.set_df_property("paid_to","reqd",1)
 			cur_frm.set_df_property("paid_to_account_currency","hidden",0)
 			cur_frm.set_df_property("paid_to_account_currency","reqd",1)}
-		
-		if (frm.doc.rent_reference.length){
-			cur_frm.set_df_property("credit_paid_from","hidden",0)
-			cur_frm.set_df_property("credit_paid_from","reqd",1)
-			cur_frm.set_df_property("credit_paid_from_account_currency","hidden",0)
-			cur_frm.set_df_property("credit_paid_from_account_currency","reqd",1)
-			cur_frm.set_df_property("credit_paid_to","hidden",0)
-			cur_frm.set_df_property("credit_paid_to","reqd",1)
-			cur_frm.set_df_property("credit_paid_to_account_currency","hidden",0)
-			cur_frm.set_df_property("credit_paid_to_account_currency","reqd",1)
-		}
 	},
 	refresh:function(frm){
 		frm.events.hide_unhide_fields(frm)
@@ -58,17 +47,17 @@ frappe.ui.form.on('Store Payment', {
 				refresh_field('rent_reference');	
 		})
 	},
-	allocate_to_credit: function(frm){
-		frappe.call({
-			doc : frm.doc,
-			method : 'allocate_credit',
-			freeze : true,
-			freeze_message : 'Getting All Items'
-		}).then((res) => {
-				refresh_field('invoices_reference');
-				refresh_field('rent_reference');	
-		})
-	},
+	// allocate_to_credit: function(frm){
+	// 	frappe.call({
+	// 		doc : frm.doc,
+	// 		method : 'allocate_credit',
+	// 		freeze : true,
+	// 		freeze_message : 'Getting All Items'
+	// 	}).then((res) => {
+	// 			refresh_field('invoices_reference');
+	// 			refresh_field('rent_reference');	
+	// 	})
+	// },
 	payment_type:function(frm){
 
 		if (frm.doc.payment_type=='Pay'){
