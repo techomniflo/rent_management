@@ -58,15 +58,15 @@ def set_missing_ref_details(self, force=False):
 
 def store_credit_outstanding(doc,mehtod,cancel):
     for d in doc.references:
-        if d.reference_doctype=="Store Credit":
-            store_credit=frappe.get_doc("Store Credit",d.reference_name)
+        if d.reference_doctype=="Placement Promotion":
+            store_credit=frappe.get_doc("Placement Promotion",d.reference_name)
             if cancel:
                 new_outstanding_amount=d.outstanding_amount+d.allocated_amount
             else:
                 new_outstanding_amount=d.outstanding_amount-d.allocated_amount
             if new_outstanding_amount==0 or new_outstanding_amount<0:
                 # frappe.msgprint(dir(d))
-                frappe.db.set_value('Store Credit', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
+                frappe.db.set_value('placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
                 frappe.db.commit()
 
 @frappe.whitelist()
@@ -98,7 +98,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		else:
 			exchange_rate = 1
 			outstanding_amount = get_outstanding_on_journal_entry(reference_name)
-	elif ref_doc.doctype == "Store Credit":
+	elif ref_doc.doctype == "Placement Promotion":
 			total_amount= ref_doc.grand_total
 			outstanding_amount=ref_doc.outstanding_amount
 			exchange_rate=1
@@ -256,7 +256,7 @@ def validate_reference_documents(self):
 	if self.party_type == "Student":
 		valid_reference_doctypes = ("Fees", "Journal Entry")
 	elif self.party_type == "Customer":
-		valid_reference_doctypes = ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning","Store Credit")
+		valid_reference_doctypes = ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning","Placement Promotion")
 	elif self.party_type == "Supplier":
 		valid_reference_doctypes = ("Purchase Order", "Purchase Invoice", "Journal Entry")
 	elif self.party_type == "Employee":
