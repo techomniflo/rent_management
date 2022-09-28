@@ -256,7 +256,7 @@ def validate_reference_documents(self):
 	if self.party_type == "Student":
 		valid_reference_doctypes = ("Fees", "Journal Entry")
 	elif self.party_type == "Customer":
-		valid_reference_doctypes = ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning","Credit Note")
+		valid_reference_doctypes = ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning","Store Credit")
 	elif self.party_type == "Supplier":
 		valid_reference_doctypes = ("Purchase Order", "Purchase Invoice", "Journal Entry")
 	elif self.party_type == "Employee":

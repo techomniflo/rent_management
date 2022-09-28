@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestStoreCredit(FrappeTestCase):
+class TestPlacementPromotion(FrappeTestCase):
 	pass

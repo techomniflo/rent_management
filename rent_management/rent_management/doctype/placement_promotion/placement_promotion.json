@@ -28,7 +28,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "\nOPS-D-.YY.-\nOPS-R-.YY.-\nOPS-C-.YY.-"
+   "options": "OPS-PD-.YY.-\nOPS-CN-.YY.-\nOPS-OD-.YY.-"
   },
   {
    "fieldname": "customer",
@@ -77,6 +77,14 @@
    "label": "To Date"
   },
   {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
    "fieldname": "outstanding_amount",
    "fieldtype": "Currency",
    "label": "Outstanding Amount",
@@ -112,27 +120,18 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Store Credit",
+   "options": "Placement Promotion",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Amount",
-   "non_negative": 1,
-   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-19 18:18:40.261047",
+ "modified": "2022-09-28 12:57:38.163401",
  "modified_by": "Administrator",
  "module": "Rent Management",
- "name": "Store Credit",
+ "name": "Placement Promotion",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [

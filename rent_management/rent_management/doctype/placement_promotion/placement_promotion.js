@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 
-frappe.ui.form.on('Store Credit', {
+frappe.ui.form.on('Placement Promotion', {
 	refresh: function(frm) {
 		if(frm.doc.docstatus > 0) {
 			frm.add_custom_button(__('Ledger'), function() {

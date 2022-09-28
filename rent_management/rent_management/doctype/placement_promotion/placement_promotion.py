@@ -7,9 +7,9 @@ from frappe.model.document import Document
 from frappe.utils import cint, cstr, flt, fmt_money, formatdate, get_link_to_form, nowdate
 from erpnext.controllers.accounts_controller import AccountsController
 
-class StoreCredit(AccountsController):
+class PlacementPromotion(AccountsController):
 	def __init__(self, *args, **kwargs):
-		super(StoreCredit, self).__init__(*args, **kwargs)
+		super(PlacementPromotion, self).__init__(*args, **kwargs)
 	def validate(self):
 		pass
 	def on_submit(self):
