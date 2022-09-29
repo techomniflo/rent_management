@@ -99,7 +99,7 @@ class StorePayment(Document):
 			'invoice_name':rent.name,
 			'from_date':rent.from_date,
 			'to_date':rent.to_date,
-			'amount':rent.grand_total,
+			'grand_total':rent.grand_total,
 			'outstanding_amount':rent.outstanding_amount
 			})
 
