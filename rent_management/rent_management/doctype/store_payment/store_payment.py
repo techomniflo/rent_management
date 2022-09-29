@@ -17,7 +17,7 @@ class StorePayment(Document):
 				total_allocate+=i.allocated
 		if self.rent_reference:
 			for i in self.rent_reference:
-				total_allocate+=i.allocate
+				total_allocate+=i.allocated
 		self.allocate=total_allocate
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
