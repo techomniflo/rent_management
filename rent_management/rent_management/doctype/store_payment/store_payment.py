@@ -18,7 +18,16 @@ class StorePayment(Document):
 		if self.rent_reference:
 			for i in self.rent_reference:
 				total_allocate+=i.allocated
-		self.allocate=total_allocate
+		
+		if total_allocate <0:
+			self.payment_type='Pay'
+			self.paid_to='Debtors - OS'
+			self.paid_from='Cash - OS'
+		else:
+			self.payment_type='Receive'
+			self.paid_to='Cash - OS'
+			self.paid_from='Debtors - OS'
+		self.allocate=abs(total_allocate)
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
 		payment_entry.posting_date=self.posting_date
@@ -53,7 +62,7 @@ class StorePayment(Document):
 					'allocated_amount':i.allocated
 				})
 			for i in self.rent_reference:
-				payment_entry.append('reference',{
+				payment_entry.append('references',{
 					'reference_doctype':i.type,
 					'reference_name':i.invoice_name,
 					'total_amount':i.grand_total,
