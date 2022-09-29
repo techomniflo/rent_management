@@ -49,45 +49,9 @@ frappe.ui.form.on('Store Payment', {
 				refresh_field('rent_reference');	
 		})
 	},
-	// allocate_to_credit: function(frm){
-	// 	frappe.call({
-	// 		doc : frm.doc,
-	// 		method : 'allocate_credit',
-	// 		freeze : true,
-	// 		freeze_message : 'Getting All Items'
-	// 	}).then((res) => {
-	// 			refresh_field('invoices_reference');
-	// 			refresh_field('rent_reference');	
-	// 	})
-	// },
-// 	payment_type:function(frm){
-
-// 		if (frm.doc.payment_type=='Pay'){
-
-// 			frappe.call({
-// 				doc : frm.doc,
-// 				method : 'get_negative_outstanding',
-// 				freeze : true,
-// 				freeze_message : 'Getting All Items'
-// 			}).then((res) => {
-
-// 				if (res.message==true){
-// 					frm.set_value("paid_from","Cash - OS")
-// 					frm.set_value("paid_to",'Debtors - OS')
-// 				}
-// 				else{
-// 					frm.set_value("paid_from","Debtors - OS")
-// 					frm.set_value("paid_to",'Cash - OS')
-// 					frm.set_value("payment_type","Receive")
-// 					frappe.msgprint("Can't pay to Customer to without negative outstanding Invoices")
-// 				}
 	
-// 			})
-// 	}
-// 	else{
-// 		frm.set_value("paid_from","Debtors - OS")
-// 		frm.set_value("paid_to",'Cash - OS')
-// 	}
-// }
+	on_submit:function(frm){
+		cur_frm.set_df_property("get_outstanding","hidden",1)
+	}
 
 });
