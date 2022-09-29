@@ -21,9 +21,9 @@ class StorePayment(Document):
 		self.allocate=total_allocate
 	def make_payment_entry(self):
 		payment_entry=frappe.new_doc('Payment Entry')
-		payment_entry.posting_date=today()
+		payment_entry.posting_date=self.posting_date
 		payment_entry.company=self.company
-		payment_entry.payment_type='Receive'
+		payment_entry.payment_type=self.payment_type
 		payment_entry.mode_of_payment='Cash'
 		payment_entry.party_type='Customer'
 		payment_entry.party=self.customer
@@ -50,6 +50,14 @@ class StorePayment(Document):
 					'reference_name':i.invoice_name,
 					'total_amount':i.grand_total,
 					'outstanding_amount':i.outstanding,
+					'allocated_amount':i.allocated
+				})
+			for i in self.rent_reference:
+				payment_entry.append('reference',{
+					'reference_doctype':i.type,
+					'reference_name':i.invoice_name,
+					'total_amount':i.grand_total,
+					'outstanding_amount':i.outstanding_amount,
 					'allocated_amount':i.allocated
 				})
 		payment_entry.save(ignore_permissions = True)
