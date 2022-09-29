@@ -3,6 +3,7 @@
 
 frappe.ui.form.on('Store Payment', {
 	hide_unhide_fields:function(frm){
+		cur_frm.set_df_property("mode_of_payment","hidden",0)
 		if (frm.doc.invoices_reference.length){
 			cur_frm.set_df_property("paid_from","hidden",0)
 			cur_frm.set_df_property("paid_from","reqd",1)
