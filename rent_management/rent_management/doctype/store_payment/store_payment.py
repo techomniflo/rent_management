@@ -63,7 +63,7 @@ class StorePayment(Document):
 				})
 			for i in self.rent_reference:
 				payment_entry.append('references',{
-					'reference_doctype':i.type,
+					'reference_doctype':'Placement Promotion',
 					'reference_name':i.invoice_name,
 					'total_amount':i.grand_total,
 					'outstanding_amount':i.outstanding_amount,
