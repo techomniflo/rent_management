@@ -4,6 +4,7 @@
 frappe.ui.form.on('Store Payment', {
 	hide_unhide_fields:function(frm){
 		cur_frm.set_df_property("mode_of_payment","hidden",0)
+		cur_frm.set_df_property("payment_type","hidden",0)
 		if (frm.doc.invoices_reference.length){
 			cur_frm.set_df_property("paid_from","hidden",0)
 			cur_frm.set_df_property("paid_from","reqd",1)
@@ -59,34 +60,34 @@ frappe.ui.form.on('Store Payment', {
 	// 			refresh_field('rent_reference');	
 	// 	})
 	// },
-	payment_type:function(frm){
+// 	payment_type:function(frm){
 
-		if (frm.doc.payment_type=='Pay'){
+// 		if (frm.doc.payment_type=='Pay'){
 
-			frappe.call({
-				doc : frm.doc,
-				method : 'get_negative_outstanding',
-				freeze : true,
-				freeze_message : 'Getting All Items'
-			}).then((res) => {
+// 			frappe.call({
+// 				doc : frm.doc,
+// 				method : 'get_negative_outstanding',
+// 				freeze : true,
+// 				freeze_message : 'Getting All Items'
+// 			}).then((res) => {
 
-				if (res.message==true){
-					frm.set_value("paid_from","Cash - OS")
-					frm.set_value("paid_to",'Debtors - OS')
-				}
-				else{
-					frm.set_value("paid_from","Debtors - OS")
-					frm.set_value("paid_to",'Cash - OS')
-					frm.set_value("payment_type","Receive")
-					frappe.msgprint("Can't pay to Customer to without negative outstanding Invoices")
-				}
+// 				if (res.message==true){
+// 					frm.set_value("paid_from","Cash - OS")
+// 					frm.set_value("paid_to",'Debtors - OS')
+// 				}
+// 				else{
+// 					frm.set_value("paid_from","Debtors - OS")
+// 					frm.set_value("paid_to",'Cash - OS')
+// 					frm.set_value("payment_type","Receive")
+// 					frappe.msgprint("Can't pay to Customer to without negative outstanding Invoices")
+// 				}
 	
-			})
-	}
-	else{
-		frm.set_value("paid_from","Debtors - OS")
-		frm.set_value("paid_to",'Cash - OS')
-	}
-}
+// 			})
+// 	}
+// 	else{
+// 		frm.set_value("paid_from","Debtors - OS")
+// 		frm.set_value("paid_to",'Cash - OS')
+// 	}
+// }
 
 });

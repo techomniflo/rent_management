@@ -156,6 +156,7 @@
   {
    "fieldname": "payment_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Payment Type",
    "options": "Receive\nPay"
   },
@@ -170,7 +171,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-09-29 17:01:48.260745",
+ "modified": "2022-09-29 17:25:36.953125",
  "modified_by": "Administrator",
  "module": "Rent Management",
  "name": "Store Payment",
