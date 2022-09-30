@@ -713,7 +713,7 @@ frappe.ui.form.on('Payment Entry', {
 		frappe.flags.allocate_payment_amount = filters['allocate_payment_amount'];
 
 		return  frappe.call({
-			method: 'erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents',
+			method: 'rent_management.rent_management.doctype_events.payment_entry.get_outstanding_reference_documents',
 			args: {
 				args:args
 			},
