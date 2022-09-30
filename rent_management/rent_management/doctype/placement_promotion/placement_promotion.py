@@ -2,8 +2,20 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from frappe.model.document import Document
 # from erpnext.controllers.accounts_controller import get_gl_dict
+from frappe.utils import (
+	add_days,
+	add_months,
+	cint,
+	cstr,
+	flt,
+	formatdate,
+	get_link_to_form,
+	getdate,
+	nowdate,
+)
 from frappe.utils import cint, cstr, flt, fmt_money, formatdate, get_link_to_form, nowdate
 from erpnext.controllers.accounts_controller import AccountsController
 
@@ -12,6 +24,17 @@ class PlacementPromotion(AccountsController):
 		super(PlacementPromotion, self).__init__(*args, **kwargs)
 	def validate(self):
 		pass
+	def set_indicator(self):
+		"""Set indicator for portal"""
+		if self.outstanding_amount != 0 and getdate(self.due_date) >= getdate(nowdate()):
+			self.indicator_color = "orange"
+			self.indicator_title = _("Unpaid")
+		elif self.outstanding_amount != 0 and getdate(self.due_date) < getdate(nowdate()):
+			self.indicator_color = "red"
+			self.indicator_title = _("Overdue")
+		else:
+			self.indicator_color = "green"
+			self.indicator_title = _("Paid")
 	def on_submit(self):
 		self.makes_gl_entries()
 	def on_cancel(self):

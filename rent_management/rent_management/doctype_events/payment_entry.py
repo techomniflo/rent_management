@@ -65,17 +65,15 @@ def set_missing_ref_details(self, force=False):
 
 
 def store_credit_outstanding(doc,mehtod,cancel):
-    for d in doc.references:
-        if d.reference_doctype=="Placement Promotion":
-            store_credit=frappe.get_doc("Placement Promotion",d.reference_name)
-            if cancel:
-                new_outstanding_amount=d.outstanding_amount+d.allocated_amount
-            else:
-                new_outstanding_amount=d.outstanding_amount-d.allocated_amount
-            if new_outstanding_amount==0 or new_outstanding_amount<0:
-                # frappe.msgprint(dir(d))
-                frappe.db.set_value('Placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
-                frappe.db.commit()
+	for d in doc.references:
+		if d.reference_doctype=="Placement Promotion":
+			store_credit=frappe.get_doc("Placement Promotion",d.reference_name)
+			if cancel:
+				new_outstanding_amount=d.outstanding_amount+d.allocated_amount
+			else:
+				new_outstanding_amount=d.outstanding_amount-d.allocated_amount
+			frappe.db.set_value('Placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
+			frappe.db.commit()
 
 @frappe.whitelist()
 def get_reference_details(reference_doctype, reference_name, party_account_currency):
@@ -637,6 +635,7 @@ def get_negative_outstanding_invoices(
 def get_customer_outstanding(party_type,party,company,party_account):
 	values={'company':company,'customer':party}
 	sales_invoices=frappe.db.sql("""select 'Sales Invoice' as 'voucher_type',si.name as 'voucher_no',si.posting_date,si.rounded_total as 'invoice_amount',si.outstanding_amount as 'outstanding_amount',si.due_date,'INR' as 'currency', 1 as 'exchange_rate' from `tabSales Invoice` as si where si.company=%(company)s and si.customer=%(customer)s and si.outstanding_amount!=0 and si.docstatus=1 order by si.posting_date;""",values=values,as_dict=True)
-	rent_invoices=frappe.db.sql("""select 'Placement Promotion' as 'voucher_type',r.name as	voucher_no',r.grand_total as 'invoice_amount',r.outstanding_amount as 'outstanding_amount','INR' as 'currency',1 as 'exchange_rate' from `tabPlacement Promotion` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount!=0 and r.docstatus=1 order by r.posting_date""",values=values,as_dict=True)
-	return json.dumps(sales_invoices+rent_invoices,default=str)
-
+	rent_invoices=frappe.db.sql("""select 'Placement Promotion' as 'voucher_type',r.name as	'voucher_no',r.grand_total as 'invoice_amount',r.outstanding_amount as 'outstanding_amount','INR' as 'currency',1 as 'exchange_rate' from `tabPlacement Promotion` as r where r.company=%(company)s and r.customer=%(customer)s and r.outstanding_amount!=0 and r.docstatus=1 order by r.posting_date""",values=values,as_dict=True)
+	for i in rent_invoices:
+		i['due_date']=None
+	return sales_invoices+rent_invoices
