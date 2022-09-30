@@ -107,8 +107,8 @@ doctype_js = {"Payment Entry": "public/payment_entry.js","Payment Entry Referenc
 
 doc_events = {
 	"Payment Entry": {
-		"before_submit": "rent_management.rent_management.doctype_events.payment_entry.before_submit",
-		"before_cancel": "rent_management.rent_management.doctype_events.payment_entry.before_cancel",
+		# "before_submit": "rent_management.rent_management.doctype_events.payment_entry.before_submit",
+		# "before_cancel": "rent_management.rent_management.doctype_events.payment_entry.before_cancel",
 		"on_submit": "rent_management.rent_management.doctype_events.payment_entry.on_submit",
 		"on_cancel":"rent_management.rent_management.doctype_events.payment_entry.on_cancel"
 	}
