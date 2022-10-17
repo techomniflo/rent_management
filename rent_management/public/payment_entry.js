@@ -814,10 +814,10 @@ frappe.ui.form.on('Payment Entry', {
 		} else if (in_list(["Customer", "Supplier"], frm.doc.party_type)) {
 			if(paid_amount > total_negative_outstanding) {
 				if(total_negative_outstanding == 0) {
-					frappe.msgprint(
-						__("Cannot {0} {1} {2} without any negative outstanding invoice", [frm.doc.payment_type,
-							(frm.doc.party_type=="Customer" ? "to" : "from"), frm.doc.party_type])
-					);
+					// frappe.msgprint(
+					// 	__("Cannot {0} {1} {2} without any negative outstanding invoice", [frm.doc.payment_type,
+					// 		(frm.doc.party_type=="Customer" ? "to" : "from"), frm.doc.party_type])
+					// );
 					return false
 				} else {
 					frappe.msgprint(
