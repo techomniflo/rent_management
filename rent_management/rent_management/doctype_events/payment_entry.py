@@ -32,12 +32,14 @@ def validate(doc,method):
 #     store_credit_outstanding(doc,method,cancel=True)
 
 def on_submit(doc,method):
-	update_outstanding_amounts(doc,method)
 	store_credit_outstanding(doc,method,cancel=False)
+	update_outstanding_amounts(doc,method)
+	
 
 def on_cancel(doc,method):
-	update_outstanding_amounts(doc,method)
 	store_credit_outstanding(doc,method,cancel=True)
+	update_outstanding_amounts(doc,method)
+	
 
 
 def update_outstanding_amounts(doc,method):
@@ -47,9 +49,7 @@ def update_outstanding_amounts(doc,method):
 def set_missing_ref_details(self, force=False):
     for d in self.get("references"):
         if d.allocated_amount:
-            ref_details = get_reference_details(
-                d.reference_doctype, d.reference_name, self.party_account_currency
-            )
+            ref_details = get_reference_details(d.reference_doctype, d.reference_name, self.party_account_currency)
 
             for field, value in iteritems(ref_details):
                 if d.exchange_gain_loss:
