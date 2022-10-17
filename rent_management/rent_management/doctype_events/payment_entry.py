@@ -69,9 +69,9 @@ def store_credit_outstanding(doc,mehtod,cancel):
 		if d.reference_doctype=="Placement Promotion":
 			store_credit=frappe.get_doc("Placement Promotion",d.reference_name)
 			if cancel:
-				new_outstanding_amount=d.outstanding_amount+d.allocated_amount
+				new_outstanding_amount=store_credit.outstanding_amount+d.allocated_amount
 			else:
-				new_outstanding_amount=d.outstanding_amount-d.allocated_amount
+				new_outstanding_amount=store_credit.outstanding_amount-d.allocated_amount
 			frappe.db.set_value('Placement Promotion', d.reference_name, 'outstanding_amount', new_outstanding_amount , update_modified=False)
 			frappe.db.commit()
 
