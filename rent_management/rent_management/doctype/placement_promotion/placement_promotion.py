@@ -24,17 +24,6 @@ class PlacementPromotion(AccountsController):
 		super(PlacementPromotion, self).__init__(*args, **kwargs)
 	def validate(self):
 		pass
-	def set_indicator(self):
-		"""Set indicator for portal"""
-		if self.outstanding_amount != 0 and getdate(self.due_date) >= getdate(nowdate()):
-			self.indicator_color = "orange"
-			self.indicator_title = _("Unpaid")
-		elif self.outstanding_amount != 0 and getdate(self.due_date) < getdate(nowdate()):
-			self.indicator_color = "red"
-			self.indicator_title = _("Overdue")
-		else:
-			self.indicator_color = "green"
-			self.indicator_title = _("Paid")
 	def on_submit(self):
 		self.makes_gl_entries()
 	def on_cancel(self):
@@ -65,7 +54,7 @@ class PlacementPromotion(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"credit_in_account_currency": abs(self.grand_total),
-							"remarks": "Rent collected",
+							"remarks": "",
 							"cost_center": 'Main - OS'
 						},
 						item=self
