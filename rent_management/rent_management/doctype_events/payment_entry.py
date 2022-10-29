@@ -373,7 +373,7 @@ def get_outstanding_reference_documents(args):
 	if args.get("company"):
 		condition += " and company = {0}".format(frappe.db.escape(args.get("company")))
 
-	frappe.msgprint(condition)
+	
 	if args.get("party_type") == "Customer":
 		return get_customer_outstanding(args.get("party_type"),
 		args.get("party"),
@@ -387,7 +387,7 @@ def get_outstanding_reference_documents(args):
 		filters=args,
 		condition=condition,
 	)
-	frappe.msgprint(json.dumps(outstanding_invoices,default=str))
+	# frappe.msgprint(json.dumps(outstanding_invoices,default=str))
 
 	outstanding_invoices = split_invoices_based_on_payment_terms(outstanding_invoices)
 
