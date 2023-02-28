@@ -15,7 +15,7 @@ app_license = "MIT"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/rent_management/css/rent_management.css"
 # app_include_js = "/assets/rent_management/js/rent_management.js"
-# app_include_js = ["/assets/rent_management/payment_entry.js"]
+app_include_js = ["/assets/rent_management/payment_entry.js"]
 # include js, css files in header of web template
 # web_include_css = "/assets/rent_management/css/rent_management.css"
 # web_include_js = "/assets/rent_management/js/rent_management.js"
@@ -32,7 +32,7 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_js = {"Payment Entry": "public/payment_entry.js","Payment Entry Reference": "public/payment_entry.js"}
+doctype_js = {"Payment Entry": "public/payment_entry.js","Payment Entry Reference": "public/payment_entry.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -147,6 +147,7 @@ doc_events = {
 # ------------------------------
 #
 override_whitelisted_methods = {
+    "erpnext.accounts.doctype.payment_entry.payment_entry.get_reference_details":"rent_management.rent_management.doctype_override.payment_entry_override.get_reference_details",
     "erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents":"rent_management.rent_management.doctype_events.payment_entry.get_outstanding_reference_documents"
 	# "frappe.desk.doctype.event.event.get_events": "rent_management.event.get_events"
 }
