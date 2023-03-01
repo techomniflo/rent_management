@@ -1,155 +1,192 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "naming_series:",
- "creation": "2022-09-05 16:26:14.679454",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "naming_series",
-  "customer",
-  "customer_name",
-  "column_break_3",
-  "company",
-  "posting_date",
-  "section_break_5",
-  "from_date",
-  "to_date",
-  "grand_total",
-  "outstanding_amount",
-  "discount_type",
-  "credit_to",
-  "debit_to",
-  "amended_from"
- ],
- "fields": [
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "OPS-PD-.YY.-\nOPS-CN-.YY.-\nOPS-OD-.YY.-"
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_standard_filter": 1,
-   "label": "Customer",
-   "options": "Customer",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "customer.customer_name",
-   "fieldname": "customer_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Customer Name"
-  },
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_5",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "from_date",
-   "fieldtype": "Date",
-   "label": "From Date"
-  },
-  {
-   "fieldname": "to_date",
-   "fieldtype": "Date",
-   "label": "To Date"
-  },
-  {
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Amount",
-   "reqd": 1
-  },
-  {
-   "fieldname": "outstanding_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Outstanding Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "discount_type",
-   "fieldtype": "Select",
-   "label": "Discount Type",
-   "options": "Display Discount\nInvoice Discount"
-  },
-  {
-   "default": "Debtors - OS",
-   "fieldname": "credit_to",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Credit To",
-   "options": "Account",
-   "reqd": 1
-  },
-  {
-   "default": "Marketing Expenses - OS",
-   "fieldname": "debit_to",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Debit To",
-   "options": "Account",
-   "reqd": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Placement Promotion",
-   "print_hide": 1,
-   "read_only": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "is_submittable": 1,
- "links": [],
- "modified": "2022-09-28 15:13:02.982482",
- "modified_by": "Administrator",
- "module": "Rent Management",
- "name": "Placement Promotion",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
-}
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "naming_series:",
+    "creation": "2022-09-05 16:26:14.679454",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+     "naming_series",
+     "customer",
+     "customer_name",
+     "column_break_3",
+     "company",
+     "posting_date",
+     "section_break_5",
+     "from_date",
+     "to_date",
+     "grand_total",
+     "outstanding_amount",
+     "discount_type",
+     "custom_remarks",
+     "remarks",
+     "credit_to",
+     "debit_to",
+     "column_break_17",
+     "asset",
+     "item_group",
+     "amended_from"
+    ],
+    "fields": [
+     {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "OPS-PD-.YY.-\nOPS-CN-.YY.-\nOPS-OD-.YY.-"
+     },
+     {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_standard_filter": 1,
+      "label": "Customer",
+      "options": "Customer",
+      "reqd": 1
+     },
+     {
+      "fetch_from": "customer.customer_name",
+      "fieldname": "customer_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Customer Name"
+     },
+     {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+     },
+     {
+      "fieldname": "company",
+      "fieldtype": "Link",
+      "label": "Company",
+      "options": "Company",
+      "reqd": 1
+     },
+     {
+      "fieldname": "posting_date",
+      "fieldtype": "Date",
+      "label": "Posting Date",
+      "reqd": 1
+     },
+     {
+      "fieldname": "section_break_5",
+      "fieldtype": "Section Break"
+     },
+     {
+      "fieldname": "from_date",
+      "fieldtype": "Date",
+      "label": "From Date",
+      "mandatory_depends_on": "eval:doc.discount_type=='Display Discount'"
+     },
+     {
+      "fieldname": "to_date",
+      "fieldtype": "Date",
+      "label": "To Date",
+      "mandatory_depends_on": "eval:doc.discount_type=='Display Discount'"
+     },
+     {
+      "fieldname": "grand_total",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Amount",
+      "reqd": 1
+     },
+     {
+      "fieldname": "outstanding_amount",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Outstanding Amount",
+      "read_only": 1
+     },
+     {
+      "fieldname": "discount_type",
+      "fieldtype": "Select",
+      "label": "Discount Type",
+      "options": "Display Discount\nInvoice Discount"
+     },
+     {
+      "default": "Debtors - OS",
+      "fieldname": "credit_to",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Credit To",
+      "options": "Account",
+      "reqd": 1
+     },
+     {
+      "default": "Marketing Expenses - OS",
+      "fieldname": "debit_to",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Debit To",
+      "options": "Account",
+      "reqd": 1
+     },
+     {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Placement Promotion",
+      "print_hide": 1,
+      "read_only": 1
+     },
+     {
+      "default": "0",
+      "fieldname": "custom_remarks",
+      "fieldtype": "Check",
+      "label": "Custom Remarks"
+     },
+     {
+      "fieldname": "remarks",
+      "fieldtype": "Data",
+      "label": "Remarks",
+      "read_only_depends_on": "eval:doc.custom_remarks==0"
+     },
+     {
+      "fieldname": "column_break_17",
+      "fieldtype": "Column Break"
+     },
+     {
+      "fieldname": "asset",
+      "fieldtype": "Select",
+      "label": "Asset",
+      "mandatory_depends_on": "eval:doc.discount_type=='Display Discount'",
+      "options": "\nCTU\nFSU\nEnd Cap"
+     },
+     {
+      "fieldname": "item_group",
+      "fieldtype": "Link",
+      "label": "Item Group",
+      "mandatory_depends_on": "eval:doc.discount_type=='Display Discount'",
+      "options": "Item Group"
+     }
+    ],
+    "index_web_pages_for_search": 1,
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2023-03-01 17:24:50.761355",
+    "modified_by": "Administrator",
+    "module": "Rent Management",
+    "name": "Placement Promotion",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+     {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+     }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+   }
