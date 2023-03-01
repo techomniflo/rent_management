@@ -23,7 +23,14 @@ class PlacementPromotion(AccountsController):
 	def __init__(self, *args, **kwargs):
 		super(PlacementPromotion, self).__init__(*args, **kwargs)
 	def validate(self):
-		pass
+		if self.custom_remarks==0:
+			if self.discount_type=='Display Discount':
+				self.remarks=f"{self.discount_type} on {self.asset} for {self.item_group}"
+			else:
+				self.remarks=f"{self.discount_type}"
+		if self.from_date and self.to_date:
+			if self.from_date>self.to_date:
+				frappe.throw("From Date cann't greater than To Date")
 	def on_submit(self):
 		self.makes_gl_entries()
 	def on_cancel(self):
@@ -53,7 +60,7 @@ class PlacementPromotion(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"credit_in_account_currency": abs(self.grand_total),
-							"remarks": "",
+							"remarks": self.remarks,
 							"cost_center": 'Main - OS'
 						},
 						item=self
@@ -73,7 +80,7 @@ class PlacementPromotion(AccountsController):
                             "company": 'Omnipresent Services',
 							"account_currency": 'INR',
 							"debit_in_account_currency": abs(self.grand_total),
-							"remarks": "",
+							"remarks": self.remarks,
 							"cost_center": 'Main - OS'
 						},
 						item=self
