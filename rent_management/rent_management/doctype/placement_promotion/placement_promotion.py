@@ -35,7 +35,7 @@ class PlacementPromotion(AccountsController):
 		self.makes_gl_entries()
 	def on_cancel(self):
 		from erpnext.accounts.general_ledger import make_reverse_gl_entries
-		self.ignore_linked_doctypes = ("GL Entry")
+		self.ignore_linked_doctypes = ("GL Entry","Payment Ledger Entry")
 		make_reverse_gl_entries(voucher_type=self.doctype, voucher_no=self.name)
 
 	def makes_gl_entries(self,cancel=0,adv_adj=0):
