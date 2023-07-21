@@ -33,6 +33,73 @@ class CustomPaymentEntry(PaymentEntry):
 
 					if field == "exchange_rate" or not d.get(field) or force:
 						d.db_set(field, value)
+	
+	def validate_allocated_amount_with_latest_data(self):
+		from rent_management.rent_management.doctype_events.payment_entry import get_outstanding_reference_documents
+
+		latest_references = get_outstanding_reference_documents(
+			{
+				"posting_date": self.posting_date,
+				"company": self.company,
+				"party_type": self.party_type,
+				"payment_type": self.payment_type,
+				"party": self.party,
+				"party_account": self.paid_from if self.payment_type == "Receive" else self.paid_to,
+				"get_outstanding_invoices": True,
+				"get_orders_to_be_billed": True,
+			}
+		)
+		
+
+		# Group latest_references by (voucher_type, voucher_no)
+		latest_lookup = {}
+		for d in latest_references:
+			d = frappe._dict(d)
+			latest_lookup.setdefault((d.voucher_type, d.voucher_no), frappe._dict())[d.payment_term] = d
+
+		for d in self.get("references"):
+			latest = (latest_lookup.get((d.reference_doctype, d.reference_name)) or frappe._dict()).get(
+				d.payment_term
+			)
+
+			# The reference has already been fully paid
+
+			if not latest:
+				frappe.throw(
+					_("{0} {1} has already been fully paid.").format(_(d.reference_doctype), d.reference_name)
+				)
+			# The reference has already been partly paid
+			elif latest.outstanding_amount < latest.invoice_amount and flt(
+				d.outstanding_amount, d.precision("outstanding_amount")
+			) != flt(latest.outstanding_amount, d.precision("outstanding_amount")):
+
+				frappe.throw(
+					_(
+						"{0} {1} has already been partly paid. Please use the 'Get Outstanding Invoice' or the 'Get Outstanding Orders' button to get the latest outstanding amounts."
+					).format(_(d.reference_doctype), d.reference_name)
+				)
+
+			fail_message = _("Row #{0}: Allocated Amount cannot be greater than outstanding amount.")
+
+			if (flt(d.allocated_amount)) > 0 and flt(d.allocated_amount) > flt(latest.outstanding_amount):
+				frappe.throw(fail_message.format(d.idx))
+
+			if d.payment_term and (
+				(flt(d.allocated_amount)) > 0
+				and flt(d.allocated_amount) > flt(latest.payment_term_outstanding)
+			):
+				frappe.throw(
+					_(
+						"Row #{0}: Allocated amount:{1} is greater than outstanding amount:{2} for Payment Term {3}"
+					).format(
+						d.idx, d.allocated_amount, latest.payment_term_outstanding, d.payment_term
+					)
+				)
+
+			# Check for negative outstanding invoices as well
+			if flt(d.allocated_amount) < 0 and flt(d.allocated_amount) < flt(latest.outstanding_amount):
+				frappe.throw(fail_message.format(d.idx))
+
 
 def get_outstanding_on_journal_entry(name):
 	res = frappe.db.sql(
